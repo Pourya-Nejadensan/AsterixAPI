@@ -10,7 +10,13 @@ import java.util.List;
 @RequestMapping("/asterix")
 public class AsterixController {
 
-    @GetMapping("/characters")
+    AsterixRepo asterixRepo;
+
+    public AsterixController(AsterixRepo asterixRepo) {
+        this.asterixRepo = asterixRepo;
+    }
+
+    /*    @GetMapping("/characters")
     public List<Character> getCharacters() {
         return List.of(
                 new Character("1", "Asterix", 35, "Krieger"),
@@ -24,5 +30,10 @@ public class AsterixController {
                 new Character("9", "Automatix", 35, "Schmied"),
                 new Character("10", "Grockelix", 35, "Fischer")
         );
+    }*/
+
+    @GetMapping("/characters")
+    public List<Character> getCharacters() {
+        return asterixRepo.findAll();
     }
 }
