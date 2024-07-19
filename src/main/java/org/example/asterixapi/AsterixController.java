@@ -35,10 +35,18 @@ public class AsterixController {
         return asterixRepo.findAll();
     }
 
-//    @PutMapping("/characters/{id}")
-//    public Character updateCharacters(@PathVariable String id, @RequestBody Character character) {
-//        return asterixRepo.;
-//    }
+    @PutMapping("/characters/{id}")
+    public Character updateCharacters(@PathVariable String id, @RequestBody Character character) {
+        return asterixRepo.findById(id).map(existingCharacter -> {
+            existingCharacter.withName(character.name());
+            existingCharacter.withAge(character.age());
+            existingCharacter.withProfession(character.profession());
+            return asterixRepo.save(existingCharacter);
+        }).orElseGet(() -> {
+            character.withId(id);
+            return asterixRepo.save(character);
+        });
+    }
 
     @PostMapping("/characters")
     public Character addCharacters(@RequestBody Character character) {
