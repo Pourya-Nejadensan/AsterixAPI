@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/asterix")
@@ -31,6 +32,11 @@ public class AsterixController {
     @GetMapping("/characters")
     public List<Character> getCharacters() {
         return asterixService.findAllCharacter();
+    }
+
+    @GetMapping("/characters/{id}")
+    public Optional<Character> getCharacterById(@PathVariable String id) {
+        return asterixService.findCharacterById(id);
     }
 
     @PutMapping("/characters/{id}")

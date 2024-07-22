@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -14,6 +15,10 @@ public class AsterixService {
 
     public List<Character> findAllCharacter(){
         return asterixRepo.findAll();
+    }
+
+    public Optional<Character> findCharacterById(String id){
+        return asterixRepo.findById(id);
     }
 
     public void deleteCharacter(String Id){
