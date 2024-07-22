@@ -1,18 +1,16 @@
 package org.example.asterixapi;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/asterix")
+@RequiredArgsConstructor
 public class AsterixController {
 
-    AsterixRepo asterixRepo;
-
-    public AsterixController(AsterixRepo asterixRepo) {
-        this.asterixRepo = asterixRepo;
-    }
+    private final AsterixService asterixService;
 
     /*    @GetMapping("/characters")
     public List<Character> getCharacters() {
@@ -32,28 +30,20 @@ public class AsterixController {
 
     @GetMapping("/characters")
     public List<Character> getCharacters() {
-        return asterixRepo.findAll();
+        return asterixService.findAllCharacter();
     }
 
     @PutMapping("/characters/{id}")
     public Character updateCharacters(@PathVariable String id, @RequestBody Character character) {
-        return asterixRepo.findById(id).map(existingCharacter -> {
-            existingCharacter.withName(character.name());
-            existingCharacter.withAge(character.age());
-            existingCharacter.withProfession(character.profession());
-            return asterixRepo.save(existingCharacter);
-        }).orElseGet(() -> {
-            character.withId(id);
-            return asterixRepo.save(character);
-        });
+        return asterixService.updateCharacter(id, character);
     }
 
     @PostMapping("/characters")
     public Character addCharacters(@RequestBody Character character) {
-        return asterixRepo.save(character);
+        return asterixService.createCharacter(character);
     }
     @DeleteMapping("/characters/{id}")
     public void deleteCharacters(@PathVariable String id) {
-        asterixRepo.deleteById(id);
+        asterixService.deleteCharacter(id);
     }
 }
