@@ -1,5 +1,6 @@
 package org.example.asterixapi;
 
+import org.example.asterixapi.Util.IdService;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ import static org.mockito.Mockito.*;
 class AsterixServiceTest {
 
     AsterixRepo asterixRepo = mock(AsterixRepo.class);
-    AsterixService asterixService = new AsterixService(asterixRepo);
+    IdService idService = mock(IdService.class);
+    AsterixService asterixService = new AsterixService(asterixRepo, idService);
 
     @Test
     void findAllCharacterTest_EmptyList() {
@@ -93,5 +95,10 @@ class AsterixServiceTest {
         verify(asterixRepo).findById("1");
         verify(asterixRepo).save(characterToUpdate);
         assertEquals(characterToUpdate, actual);
+    }
+
+    @Test
+    void createCharacter() {
+
     }
 }
