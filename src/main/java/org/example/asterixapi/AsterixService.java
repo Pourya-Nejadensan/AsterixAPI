@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +20,13 @@ public class AsterixService {
         asterixRepo.deleteById(Id);
     }
 
-    public Character createCharacter(Character character){
-        return asterixRepo.save(character);
+    public Character createCharacter(CharacterDTO characterDTO){
+        return asterixRepo.save(new Character(
+                UUID.randomUUID().toString(),
+                characterDTO.name(),
+                characterDTO.age(),
+                characterDTO.profession()
+        ));
     }
 
     public Character updateCharacter(String id ,Character character){

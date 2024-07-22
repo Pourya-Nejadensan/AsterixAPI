@@ -39,8 +39,8 @@ public class AsterixController {
     }
 
     @PostMapping("/characters")
-    public Character addCharacters(@RequestBody Character character) {
-        return asterixService.createCharacter(character);
+    public Character addCharacters(@RequestBody CharacterDTO characterDto) {
+        return asterixService.createCharacter(characterDto);
     }
     @DeleteMapping("/characters/{id}")
     public void deleteCharacters(@PathVariable String id) {
