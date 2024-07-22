@@ -64,9 +64,34 @@ class AsterixServiceTest {
 
     @Test
     void deleteCharacterTest() {
+        //GIVEN
+        String characterId = "1";
+
+        doNothing().when(asterixRepo).deleteById("1");
+
+        //WHEN
+        asterixService.deleteCharacter(characterId);
+
+        //THEN
+        verify(asterixRepo).deleteById(characterId);
     }
 
     @Test
     void updateCharacterTest() {
+        //GIVEN
+        Character character = new Character("1", "Test", 31, "Test");
+
+        Character characterToUpdate = new Character("1", "UpdatedTest", 32, "UpdatedTest");
+
+        when(asterixRepo.findById("1")).thenReturn(Optional.of(character));
+        when(asterixRepo.save(characterToUpdate)).thenReturn(characterToUpdate);
+
+        //WHEN
+        Character actual = asterixService.updateCharacter("1", characterToUpdate);
+
+        //THEN
+        verify(asterixRepo).findById("1");
+        verify(asterixRepo).save(characterToUpdate);
+        assertEquals(characterToUpdate, actual);
     }
 }
